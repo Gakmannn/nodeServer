@@ -17,8 +17,7 @@
     ],
     "sourceMap": true,
     "paths": {
-      "@/*": ["resources/vue/*"],
-      "~/*": ["resources/*"]
+      "#root/*": ["./*"]
     }
   },
   "exclude": [
