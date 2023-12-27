@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { VitePluginNode } from 'vite-plugin-node';
+import path from 'path'
 
 export default defineConfig({
   // ...vite configures
@@ -50,6 +51,11 @@ export default defineConfig({
       swcOptions: {}
     })
   ],
+  resolve: {
+    alias: {
+      '#root': path.resolve(__dirname, './'),
+    },
+  },
   optimizeDeps: {
     // Vite does not work well with optionnal dependencies,
     // you can mark them as ignored for now
