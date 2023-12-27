@@ -1,11 +1,40 @@
 import Router from 'express'
 import axios from 'axios'
-
+import fs from 'fs'
 const router = Router()
 
 // Описываем функцию, которая будет обрабатывать GET запросы на адрес '/'
 router.get('/', function (req, res) {
   res.send('Hello World')
+})
+
+router.get('/mydata', function (req, res) {
+  const data = fs.readFileSync('static/data.json', 'utf8')
+  res.send({ ok: true, data:JSON.parse(data)})
+})
+
+router.post('/mydata', function (req, res) {
+  try {
+    const data = fs.readFileSync('static/data.json', 'utf8')
+    const objData = JSON.parse(data.toString())
+    Object.assign(objData, req.body)
+    fs.writeFileSync('static/data.json', JSON.stringify(objData))
+    res.send({ ok: true, data: objData })
+  } catch(e) {
+    res.status(500).send({ok:false, error:e})
+  }
+})
+
+router.delete('/mydata/:key', function (req, res) {
+  try {
+    const data = fs.readFileSync('static/data.json', 'utf8')
+    const objData = JSON.parse(data.toString())
+    delete objData[req.params.key]
+    fs.writeFileSync('static/data.json', JSON.stringify(objData))
+    res.send({ ok: true, data: objData })
+  } catch(e) {
+    res.status(500).send({ok:false, error:e})
+  }
 })
 
 // Описываем функцию, которая будет обрабатывать GET запросы на адрес '/hello'
