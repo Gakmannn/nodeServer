@@ -1,0 +1,8 @@
+{
+  "news":[],
+  "comments":[],
+  "users":[
+    {"id":"0", "name":"Андрей", "role":"admin"},
+    {"id":"1", "name":"Вова", "role":null}
+  ]
+}
