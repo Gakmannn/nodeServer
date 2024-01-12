@@ -8,6 +8,8 @@ import sharp from 'sharp'
 import compression from 'compression'
 import routes from '#root/routes/index'
 import apiRoutes from '#root/routes/api'
+import dotenv from 'dotenv'
+dotenv.config()
 // import helmet from "helmet"
 
 // Создаём сервер
@@ -106,14 +108,14 @@ app.use(bodyParser.json())
 app.use(compression({ strategy: 3 }))
 
 // Используем папку со статическим контентом
-app.use(express.static('static'))
+// app.use(express.static('static'))
 
 app.use('/api', apiRoutes)
 app.use(routes)
 
 // Запуск на проде
 if (import.meta.env.PROD)
-  app.listen(3000)
+  app.listen(3001)
 
 // Запуск в DEV режиме
 export const viteNodeApp = app

@@ -1,11 +1,28 @@
 import Router from 'express'
 import axios from 'axios'
 import fs from 'fs'
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 const router = Router()
 
 // Описываем функцию, которая будет обрабатывать GET запросы на адрес '/'
 router.get('/', function (req, res) {
   res.send('Hello World')
+})
+
+router.get('/users', async function (req, res) {
+  const data = await prisma.user.findMany()
+  res.send({data})
+})
+
+router.get('/user/:name/:email', async function (req, res) {
+  const user = await prisma.user.create({
+    data: {
+      name: req.params.name,
+      email: req.params.email
+    }
+  })
+  res.send({ user })
 })
 
 router.get('/mydata', function (req, res) {
