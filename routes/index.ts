@@ -10,19 +10,88 @@ router.get('/', function (req, res) {
   res.send('Hello World')
 })
 
+// router.get('/users', async function (req, res) {
+//   const data = await prisma.user.findMany()
+//   res.send({data})
+// })
+
+// router.get('/user/:name/:email', async function (req, res) {
+//   const user = await prisma.user.create({
+//     data: {
+//       name: req.params.name,
+//       email: req.params.email
+//     }
+//   })
+//   res.send({ user })
+// })
+
 router.get('/users', async function (req, res) {
-  const data = await prisma.user.findMany()
+  const data = await prisma.user.findMany({
+    // include:{posts:true},
+    select: {
+      id: true,
+      profile: true,
+      posts: {
+        select: {
+          id: true,
+          title: true,
+          content: true,
+          created_at: true,
+          categories: true
+        }
+      }
+    },
+    where: {
+      
+    }
+  })
   res.send({data})
 })
 
-router.get('/user/:name/:email', async function (req, res) {
-  const user = await prisma.user.create({
-    data: {
-      name: req.params.name,
-      email: req.params.email
+router.get('/posts', async function (req, res) {
+  const data = await prisma.post.findMany({
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      created_at: true,
+      categories: true,
+      author: {
+        select: {
+          id: true,
+          profile: true
+        }
+      }
+    },
+    where: {
+      // published: true,
     }
   })
-  res.send({ user })
+  res.send({ data })
+})
+
+router.get('/posts/starts/:text', async function (req, res) {
+  const data = await prisma.post.findMany({
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      created_at: true,
+      author: {
+        select: {
+          id: true,
+          first_name: true,
+          last_name: true,
+        }
+      }
+    },
+    where: {
+      content: {
+        startsWith:req.params.text
+      }
+    }
+  })
+  res.send({ data })
 })
 
 router.get('/mydata', function (req, res) {

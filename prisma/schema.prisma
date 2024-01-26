@@ -7,14 +7,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model User {
+  id         Int   @id @default(autoincrement())
+  email      String   @unique
+  hash       String   @map("password_hash")
+  first_name String?  
+  last_name  String?
+  age        Int?
+  role       Role     @default(USER)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  profile    Profile?
+  posts      Post[]
+
+  @@map("users")
 }
 
-model news {
-  id    Int     @id @default(autoincrement())
-  text  String 
-  
+
+model Profile {
+  id        Int  @id @default(autoincrement())
+  nickName  String
+  userId    Int  @unique
+  user      User @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id         Int   @id @default(autoincrement())
+  title      String
+  content    String
+  published  Boolean
+  author_id  Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  author     User     @relation(fields: [author_id], references: [id])
+  categories Category[]
+  @@map("posts")
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[]
+}
+
+enum Role {
+  USER
+  ADMIN
 }
