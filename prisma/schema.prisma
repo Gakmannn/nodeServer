@@ -17,6 +17,7 @@ model User {
   role       Role     @default(USER)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  is_active  Boolean  @default(false)
   profile    Profile?
   posts      Post[]
 
