@@ -3,6 +3,8 @@
   "comments":[],
   "users":[
     {"id":"0", "name":"Андрей", "role":"admin"},
-    {"id":"1", "name":"Вова", "role":null}
+    {"id":"1", "name":"Вова", "role":null},
+    {"id":"2", "name":"Дима", "role":null},
+    {"id":"3", "name":"Саша", "role":null}
   ]
 }
