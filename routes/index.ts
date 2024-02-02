@@ -78,34 +78,39 @@ router.get('/first_user', async function (req, res) {
   res.send({data})
 })
 
-router.get('/create_user/:email/:hash/:nick', async function (req, res) {
-  const user = {
-    id:5,
-    email: req.params.email,
-    hash: req.params.hash,
-    role: Role.USER,
-    updated_at: new Date(),
-  } as any
-  delete user.id
+router.post('/create_user', async function (req, res) {
+  const user = req.body
+  console.log(user)
+  user.updated_at = new Date()
+  // const user = {
+  //   id:5,
+  //   email: req.params.email,
+  //   hash: req.params.hash,
+  //   role: Role.USER,
+  //   updated_at: new Date(),
+  // } as any
+  // delete user.id
   const data = await prisma.user.create({
     data: {
       ...user
     }, 
     select: {
       id: true,
+      uuid: true,
+      email: true,
       first_name: true,
       last_name: true,
       role: true,
       age: true,
     }
   })
-  const profile = await prisma.profile.create({
-    data: {
-      userId: data.id,
-      nickName: req.params.nick
-    }
-  })
-  Object.assign(data, {profile})
+  // const profile = await prisma.profile.create({
+  //   data: {
+  //     userId: data.id,
+  //     nickName: req.params.nick
+  //   }
+  // })
+  // Object.assign(data, {profile})
   res.send({data})
 })
 
@@ -160,6 +165,49 @@ router.get('/create_user/:id/:first_name/:last_name/:age', async function (req, 
   })
   res.send({data})
 })
+
+router.post('/login', async function (req, res) {
+  const user = req.body
+  const data = await prisma.user.findUnique({
+    // include:{posts:true},
+    select: {
+      id: true,
+      uuid: true,
+      email: true,
+      first_name: true,
+      last_name: true,
+      role: true,
+      age: true,
+    },
+    where: {
+      email: user.email,
+      hash: user.hash
+    }
+  })
+  res.send({data})
+})
+
+router.post('/check_user', async function (req, res) {
+  const user = req.body
+  const data = await prisma.user.findUnique({
+    // include:{posts:true},
+    select: {
+      id: true,
+      uuid: true,
+      email: true,
+      first_name: true,
+      last_name: true,
+      role: true,
+      age: true,
+    },
+    where: {
+      id: user.id,
+      uuid: user.uuid
+    }
+  })
+  res.send({ data })
+})
+
 
 router.get('/unic_user_id/:id', async function (req, res) {
   const id = +req.params.id
@@ -254,6 +302,7 @@ router.get('/posts', async function (req, res) {
       author: {
         select: {
           id: true,
+          email:true,
           profile: true
         }
       }
@@ -262,6 +311,39 @@ router.get('/posts', async function (req, res) {
       // published: true,
     }
   })
+  res.send({ data })
+})
+
+router.post('/posts', async function (req, res) {
+  const post = req.body
+  post.published = true
+  post.updated_at = new Date()
+  const data = await prisma.post.create({
+    data: post,
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      created_at: true,
+      categories: true,
+      author: {
+        select: {
+          id: true,
+          email:true,
+          profile: true
+        }
+      }
+    }
+  })
+  res.send({ data })
+})
+
+router.get('/sql', async function (req, res) {
+  const data = await prisma.$queryRawUnsafe(`
+  SELECT email, id 
+  FROM study.public.users
+  WHERE id=2
+  `)
   res.send({ data })
 })
 

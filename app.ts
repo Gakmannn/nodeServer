@@ -110,6 +110,7 @@ app.use(compression({ strategy: 3 }))
 // Используем папку со статическим контентом
 // app.use(express.static('static'))
 
+app.use(express.static('static'))
 app.use('/api', apiRoutes)
 app.use(routes)
 

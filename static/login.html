@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0 auto;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      height: 100vh;
+      max-width: 300px;
+      background-color: antiquewhite;
+    }
+    
+    form {
+      background: white;
+      border-radius: 10px;
+      padding: 20px; 
+      width: 300px;
+      text-align: center;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+  <form>
+    <div style="text-align: center;">
+      <button id="login">login</button>
+      <button id="reg">registration</button>
+    </div>
+    <input id="mail" type="mail" placeholder="mail">
+    <input id="pass" type="password" placeholder="pass">
+    <input id="pass2" type="password" hidden placeholder="retype pass">
+    <br>
+    <input id="submit" type="submit">
+  </form>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+  <script>
+    let action = 'login'
+    submit.value = 'Log In'
+
+    login.addEventListener('click', (e)=>{
+      e.preventDefault()
+      action = 'login'
+      pass2.hidden = true
+      actionChange()
+    })
+    reg.addEventListener('click', (e)=>{
+      e.preventDefault()
+      action = 'reg'
+      pass2.hidden = false
+      actionChange()
+    })
+
+    function actionChange() {
+      if (action=='login') {
+        submit.value = 'Log In'
+      } else {
+        submit.value = 'Register'
+      }
+    }
+
+
+    document.forms[0].addEventListener('submit', (e)=>{
+      e.preventDefault()
+      loginFunc()
+    })
+    submit.addEventListener('click', (e)=>{
+      e.preventDefault()
+      loginFunc()
+    })
+    async function loginFunc() {
+      if (!mail.value) {
+        alert('input mail')
+        return
+      }
+      if (!pass.value) {
+        alert('input pass')
+        return
+      }
+      try {
+        if (action == 'login') {
+          const resp = await fetch("/login", {
+            method: "post",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: mail.value,
+              hash: CryptoJS.MD5(pass.value).toString()
+            })
+          })
+          const data = await resp.json()
+          if (!data.data) {
+            alert ('check mail and pass')
+            return
+          }
+          localStorage.id = data.data.id
+          localStorage.uuid = data.data.uuid
+          location.assign('/')
+        } else {
+          if (pass.value != pass2.value) {
+            alert('pass not eqals')
+            return
+          }
+          const resp = await fetch("/create_user", {
+            method: "post",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: mail.value,
+              hash: CryptoJS.MD5(pass.value).toString()
+            })
+          })
+          const data = await resp.json()
+          localStorage.id = data.data.id
+          localStorage.uuid = data.data.uuid
+          location.assign('/')
+        }
+      } catch(e) {
+        console.log(e)
+      }
+    }
+  </script>
+</body>
+</html>

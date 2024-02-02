@@ -11,8 +11,9 @@ model User {
   id         Int   @id @default(autoincrement())
   email      String   @unique
   hash       String   @map("password_hash")
-  first_name String?  
-  last_name  String?
+  uuid       String   @default(uuid())
+  first_name String?  @db.VarChar(55)
+  last_name  String?  @db.VarChar(55)
   age        Int?
   role       Role     @default(USER)
   created_at DateTime @default(now())

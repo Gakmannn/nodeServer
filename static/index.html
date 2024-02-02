@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0 auto;
+      padding: 0;
+      max-width: 600px;
+      background-color: antiquewhite;
+    }
+    #content, #addPost {
+      background: white;
+      border-radius: 10px;
+      padding: 20px; 
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Posts</h1>
+  <div id="content"></div>
+  <div style="margin: 20px 0; text-align: center;">
+    <button id="add">add post</button>
+  </div>
+
+  <div id="addPost" style="text-align: center;" hidden>
+    <div style="display: flex; flex-direction: column; gap:10px; margin-bottom: 10px;">
+      <input id="newTitle" type="text" placeholder="title">
+      <textarea id="newContent" cols="30" rows="10" placeholder="content"></textarea>
+    </div>
+    <button id="addPostButton">Save</button>
+  </div>
+
+  <script src="login.js"></script>
+  <script>
+
+    add.addEventListener('click', ()=>{
+      addPost.hidden = false
+    })
+
+    addPostButton.addEventListener('click', async ()=>{
+      const resp = await fetch("/posts", {
+        method: "post",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: newTitle.value,
+          content: newContent.value,
+          author_id: +localStorage.id
+        })
+      })
+      const data = await resp.json()
+      location.reload()
+    })
+
+    async function getPosts() {
+      const resp = await fetch("/posts")
+      const data = await resp.json()
+      let textContent = ''
+      console.log(data.data)
+      for (let el of data.data) {
+        textContent += `
+          <div>
+            <h2>${el.title}</h2>
+            <p>${el.content}</p>
+            <div style="display: flex; justify-content: space-between;">
+              <p>${el.author.email}, ${new Date(el.created_at).toLocaleDateString()}</p>
+              <p>${el.categories.map(cat=>'#'+cat.name.replaceAll(' ','_'))}</p>
+            </div>
+          </div>
+        `
+      }
+      content.innerHTML = textContent
+    }
+    getPosts()
+  </script>
+</body>
+</html>
