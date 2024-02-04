@@ -7,52 +7,95 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id         Int   @id @default(autoincrement())
-  email      String   @unique
-  hash       String   @map("password_hash")
-  uuid       String   @default(uuid())
-  first_name String?  @db.VarChar(55)
-  last_name  String?  @db.VarChar(55)
-  age        Int?
-  role       Role     @default(USER)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  is_active  Boolean  @default(false)
-  profile    Profile?
-  posts      Post[]
+// model User {
+//   id         Int   @id @default(autoincrement())
+//   email      String   @unique
+//   hash       String   @map("password_hash")
+//   uuid       String   @default(uuid())
+//   first_name String?  @db.VarChar(55)
+//   last_name  String?  @db.VarChar(55)
+//   age        Int?
+//   role       Role     @default(USER)
+//   created_at DateTime @default(now())
+//   updated_at DateTime @updatedAt
+//   is_active  Boolean  @default(false)
+//   profile    Profile?
+//   posts      Post[]
+//   @@map("users")
+// }
 
+
+// model Profile {
+//   id        Int  @id @default(autoincrement())
+//   nickName  String
+//   userId    Int  @unique
+//   user      User @relation(fields: [userId], references: [id])
+// }
+
+// model Post {
+//   id         Int   @id @default(autoincrement())
+//   title      String
+//   content    String
+//   published  Boolean
+//   author_id  Int
+//   created_at DateTime @default(now())
+//   updated_at DateTime @updatedAt
+//   author     User     @relation(fields: [author_id], references: [id])
+//   categories Category[]
+//   @@map("posts")
+// }
+
+// model Category {
+//   id    Int    @id @default(autoincrement())
+//   name  String
+//   posts Post[]
+// }
+
+// enum Role {
+//   USER
+//   ADMIN
+// }
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  uuid String @default(uuid())
+  hash String @map("password_hash")
+  firstName String? @db.VarChar(35) 
+  lastName String? @db.VarChar(35)
+  role Role @default(USER)
+  createdAt DateTime @default(now())
+  updatetAt  DateTime @updatedAt
+  isActive Boolean @default(false)
+  age Int? 
+  profile Profile? 
+  posts Post[]
   @@map("users")
 }
-
-
 model Profile {
-  id        Int  @id @default(autoincrement())
-  nickName  String
-  userId    Int  @unique
-  user      User @relation(fields: [userId], references: [id])
+  id Int @id @default(autoincrement())
+  nickName String @unique
+  userId Int @unique
+  user  User @relation(fields: [userId], references: [id])
 }
-
-model Post {
-  id         Int   @id @default(autoincrement())
-  title      String
-  content    String
-  published  Boolean
-  author_id  Int
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  author     User     @relation(fields: [author_id], references: [id])
+model Post{
+  id Int @id @default(autoincrement())
+  title String
+  content String
+  published Boolean 
+  authorId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime 
+  author User @relation(fields: [authorId], references: [id])
   categories Category[]
   @@map("posts")
 }
-
-model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
+model Category{
+  id Int  @id @default(autoincrement())
+  name String
   posts Post[]
 }
-
-enum Role {
+enum Role{
   USER
   ADMIN
 }
