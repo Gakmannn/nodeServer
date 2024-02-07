@@ -37,6 +37,7 @@
     <button id="addPostButton">Save</button>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
   <script src="login.js"></script>
   <script>
 
@@ -45,19 +46,24 @@
     })
 
     addPostButton.addEventListener('click', async ()=>{
-      const resp = await fetch("/posts", {
-        method: "post",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
+      await axios.post('/posts', {
           title: newTitle.value,
           content: newContent.value,
           author_id: +localStorage.id
         })
-      })
-      const data = await resp.json()
+      // const resp = await fetch("/posts", {
+      //   method: "post",
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({
+      //     title: newTitle.value,
+      //     content: newContent.value,
+      //     author_id: +localStorage.id
+      //   })
+      // })
+      // const data = await resp.json()
       location.reload()
     })
 

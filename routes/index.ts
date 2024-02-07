@@ -48,6 +48,7 @@ router.get('/users', async function (req, res) {
       id: 'asc'
     }
   })
+  console.log(data)
   res.send({data})
 })
 
