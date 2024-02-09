@@ -21,10 +21,33 @@ model User {
   is_active  Boolean  @default(false)
   profile    Profile?
   posts      Post[]
-
+  orgers     orders[]
   @@map("users")
 }
 
+model goods {
+  id  Int   @id @default(autoincrement())
+  name  String @db.VarChar(255)
+  price Float
+  orderLine orders_table[]
+}
+
+model orders {
+  id  Int   @id @default(autoincrement())
+  userId  Int
+  user  User @relation(fields: [userId], references: [id])
+  fio String @db.VarChar(255)
+  orderTable orders_table[]
+}
+
+model orders_table {
+  id  Int   @id @default(autoincrement())
+  goods_id Int
+  goods_price Float
+  order_id Int
+  order orders @relation(fields: [order_id], references: [id])
+  goods goods[]
+}
 
 model Profile {
   id        Int  @id @default(autoincrement())
