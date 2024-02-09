@@ -10,6 +10,68 @@ router.get('/', function (req, res) {
   res.send('Hello World')
 })
 
+router.get('/any/:table/:method', async (req, res) => {
+  const table = req.params.table as string
+  if (['user'].includes(table)) {
+    res.send( {
+      message: 'access denied'
+    })
+  }
+  if (!['post'].includes(table)) {
+    res.send( {
+      message: 'get lost, scum'
+    })
+  }
+
+  const method = req.params.method as string
+  const query = req.query.query
+  let queryString = query?.toString()
+  queryString = queryString?.slice(0,-1)
+  
+  // @ts-ignore
+  const data = await prisma[table][method](JSON.parse(queryString))
+  res.send(data)
+})
+
+router.post('/estate', async (req, res) => {
+  const query = req.body.query
+  const data = await prisma.post.findMany(query)
+  res.send(data)
+})
+const secret = '12345'
+
+router.get('/secret_path/backup', async (req,res)=>{
+  const reqSecret = req.query.secret as string
+  if (secret == reqSecret) {
+    const backup = {} as any
+    for (let table in prisma) {
+      if (table[0] == '$' || table[0] == '_') continue
+      // @ts-ignore
+      backup[table] = await prisma[table].findMany()
+      backup[table].forEach((element:any) => {
+        delete element.id
+      })
+    }
+    fs.writeFileSync('data.json', JSON.stringify(backup))
+  }
+  res.send({message:'ok'})
+})
+
+router.get('/secret_path/restore', async (req,res)=>{
+  const reqSecret = req.query.secret as string
+  if (secret == reqSecret) {
+    const data = fs.readFileSync('data.json', 'utf8')
+    const backup = JSON.parse(data.toString())
+    for (let table in prisma) {
+      if (table[0] == '$' || table[0] == '_') continue
+      // @ts-ignore
+      await prisma[table].createMany({ data: backup[table] })
+    }
+  }
+  res.send({message:'ok'})
+})
+
+
 // router.get('/users', async function (req, res) {
 //   const data = await prisma.user.findMany()
 //   res.send({data})
@@ -48,7 +110,7 @@ router.get('/users', async function (req, res) {
       id: 'asc'
     }
   })
-  console.log(data)
+  // console.log(data)
   res.send({data})
 })
 
