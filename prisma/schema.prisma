@@ -7,16 +7,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model foods {
+  id   Int    @id @default(autoincrement())
+  name String
+  type String?
+  color String
+  description String
+}
+
+
+
+
 model user {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  surname  String?
-  city  String?
+  id      Int     @id @default(autoincrement())
+  email   String  @unique
+  name    String?
+  surname String?
+  city    String?
 }
 
 model news {
-  id    Int     @id @default(autoincrement())
-  text  String 
-  
+  id   Int    @id @default(autoincrement())
+  text String
+}
+
+
+model Vehicles {
+  id    Int    @id @default(autoincrement())
+  model String
+  color String
+  year  Int
+}
+
+model Cities {
+  id   Int    @id @default(autoincrement())
+  name String
+  age  Int
 }
