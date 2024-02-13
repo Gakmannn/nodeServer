@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+//!        ФАЙЛ .env поместить в корневую папку "nodeServer:)"
+//!        DATABASE_URL="postgresql://postgres:belkud123@localhost:5432/prisma?schema=public"
+
+
+
 model foods {
   id   Int    @id @default(autoincrement())
   name String
