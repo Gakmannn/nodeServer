@@ -13,11 +13,12 @@ model telephone {
   id      Int     @id @default(autoincrement())
   model    String
   price Int
-  date_of_sale String?
-  screen_diagonal Int
+  date_of_sale DateTime
+  processor String
+  screen_diagonal Float 
   battery_capacity Int
-  processor Int
   color    String?
+  extra_options Int?
   wireless_interfaces String?
 }
 
@@ -31,20 +32,4 @@ model user {
   city    String?
 }
 
-model news {
-  id   Int    @id @default(autoincrement())
-  text String
-}
-
-model Vehicles {
-  id    Int    @id @default(autoincrement())
-  model String
-  color String
-  year  Int
-}
-
-model Cities {
-  id   Int    @id @default(autoincrement())
-  name String
-  age  Int
-}
+ 
