@@ -17,7 +17,7 @@ npm 2iываываыв
 npm i 
 >  3ыыпапвап
 *npm i
-![котэ] (https://img.razrisyika.ru/kart/24/1200/94318-kot-saymon-4.jpg)  
+Котэ =^-^= (https://img.razrisyika.ru/kart/24/1200/94318-kot-saymon-4.jpg)  
 ![котэ] (cat.jpg)  
 # 1Проверка заголовка
 Проверка заголовка
