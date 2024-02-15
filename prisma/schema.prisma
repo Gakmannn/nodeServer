@@ -9,9 +9,28 @@ datasource db {
 
 //!!!!!!!!  https://www.ozon.ru/category/smartfony-15502/
 
+
+
+model User {
+  id         String   @id @default(uuid()) @db.Uuid
+  email      String   @unique
+  first_name String?  @db.VarChar(20)
+  last_name  String?  @db.VarChar(20)
+  hash       String   @map("password_hash")
+  age        Int?
+  gender     String?
+  city       String?
+  in_stock   Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  // orders     orders[]
+  @@map("users")
+}
+
 model telephone {
   id      Int     @id @default(autoincrement())
-  model    String
+  brand_name String
+  model    String @unique
   price Int
   date_of_sale DateTime
   processor String
@@ -20,16 +39,19 @@ model telephone {
   color    String?
   extra_options Int?
   wireless_interfaces String?
+  // users User[]  
 }
 
 
 
-model user {
-  id      Int     @id @default(autoincrement())
-  email   String  @unique
-  name    String?
-  surname String?
-  city    String?
-}
+
+
+// model user {
+//   id      Int     @id @default(autoincrement())
+//   email   String  @unique
+//   name    String?
+//   surname String?
+//   city    String?
+// }
 
  
