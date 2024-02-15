@@ -7,7 +7,7 @@
 #### npx prisma generate 
 --- 
 
-#### 3. Синхронизирует состояние схемы Prisma с БД  
+<h3> 3. Синхронизирует состояние схемы Prisma с БД </h3>  
 #### npx prisma db push 
 --- 
 
