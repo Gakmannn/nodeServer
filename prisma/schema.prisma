@@ -1,8 +1,3 @@
-
-
-//! DATABASE_URL="postgresql://postgres:belkud123@localhost:5432/(название папки)?schema=public"
-
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,6 +6,22 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+//!!!!!!!!  https://www.ozon.ru/category/smartfony-15502/
+
+model telephone {
+  id      Int     @id @default(autoincrement())
+  model    String
+  price Int
+  date_of_sale String?
+  screen_diagonal Int
+  battery_capacity Int
+  processor Int
+  color    String?
+  wireless_interfaces String?
+}
+
+
 
 model user {
   id      Int     @id @default(autoincrement())
