@@ -9,6 +9,7 @@ npm iываываыв
 *npm i
 npm i
 npm iываываыв
+-------
+npm i 
 > (>) ыыпапвап
 *npm i
-npm i
