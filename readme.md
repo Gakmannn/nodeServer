@@ -1,11 +1,11 @@
  
 #### 1. Инициализация призмы 
-npm i  
+#### npm i  
 --- 
 
 #### 2.	Проверить (создать) файл  .env если надо – поменять пароль и порт. 
-### DATABASE_URL="postgresql://postgres:(Пароль)@localhost:(порт)/(название таблицы)?schema=public"
-### Например: DATABASE_URL="postgresql://postgres:belkud123@localhost:5432/schema ?schema=public"
+#### DATABASE_URL="postgresql://postgres:(Пароль)@localhost:(порт)/(название таблицы)?schema=public"
+#### Например: DATABASE_URL="postgresql://postgres:belkud123@localhost:5432/schema ?schema=public"
 --- 
 
 #### 3. Инициализация призмы 
