@@ -1,3 +1,8 @@
+
+
+//! DATABASE_URL="postgresql://postgres:belkud123@localhost:5432/(название папки)?schema=public"
+
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -6,23 +11,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-
-//!        ФАЙЛ .env поместить в корневую папку "nodeServer:)"
-//!        DATABASE_URL="postgresql://postgres:belkud123@localhost:5432/prisma?schema=public"
-
-
-
-model foods {
-  id   Int    @id @default(autoincrement())
-  name String
-  type String?
-  color String
-  description String
-}
-
-
-
 
 model user {
   id      Int     @id @default(autoincrement())
@@ -36,7 +24,6 @@ model news {
   id   Int    @id @default(autoincrement())
   text String
 }
-
 
 model Vehicles {
   id    Int    @id @default(autoincrement())
