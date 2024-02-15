@@ -21,6 +21,7 @@ npm i
 
 
 #### P.S. При необходимости:  
+<br> <hr>
 #### -	Проверить (создать) файл  .env если надо – поменять пароль и порт.
 #### DATABASE_URL="postgresql://postgres:(*Пароль*)@localhost:(*порт*)/(*название таблицы*)?schema=public"
 #### Например: DATABASE_URL="postgresql://postgres:belkud123@localhost:5432/schema ?schema=public"
