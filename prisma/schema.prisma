@@ -26,8 +26,9 @@ model User {
 model telephone {
   id                  Int     @id @default(autoincrement())
   brand_name          String
-  model               String  @unique
+  model               String 
   price               Int
+  photo_link          String?
   processor           String?
   screen_diagonal     Float?
   battery_capacity    Int?
@@ -35,6 +36,14 @@ model telephone {
   color               String?
   wireless_interfaces String?
   in_stock            Boolean @default(true)
+  images              images[]
+}
+
+model images {
+  id          Int     @id @default(autoincrement())
+  phone_id    Int
+  link        String
+  phone       telephone @relation(fields: [phone_id], references: [id])
 }
 
 enum Role {

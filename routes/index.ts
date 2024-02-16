@@ -20,7 +20,7 @@ const telephoneDB = [
   },
   {
     id: 2,
-    brand_name: "Rova",
+    brand_name: "Realme",
     model:  "Neo_3",
     price: 8899,
     photo_link: "https://ir.ozone.ru/s3/multimedia-1-0/wc1000/6917369964.jpg",
@@ -53,13 +53,13 @@ const telephoneDB = [
     photo_link: "https://ir.ozone.ru/s3/multimedia-1-0/wc1000/6917369964.jpg",
     in_stock: true,
   },
-]
+] as any
 
 
 //! Описываем функцию, которая будет обрабатывать GET запросы на адрес '/'
 
 router.get('/', function (req, res) {
-  res.send(JSON.stringify(telephoneDB[1]))
+  res.send(JSON.stringify(telephoneDB))
 })
 
 router.get('/users', async function (req, res) {
@@ -67,14 +67,29 @@ router.get('/users', async function (req, res) {
   res.send({data})
 })
 
-router.get('/user/:name/:email', async function (req, res) {
-  const user = await prisma.user.create({
-    data: {
-      name: req.params.name,
-      email: req.params.email
-    }
+// router.get('/user/:name/:email', async function (req, res) {
+//   const user = await prisma.user.create({
+//     data: {
+//       name: req.params.name,
+//       email: req.params.email
+//     }
+//   })
+//   res.send({ user })
+// })
+
+router.get('/import', async (req,res)=>{
+  telephoneDB.forEach((el:any)=>{
+    delete el.id
   })
-  res.send({ user })
+  await prisma.telephone.createMany({
+    data: telephoneDB
+  })
+  res.send({ok:true})
+})
+
+router.get('/phones', async (req,res)=>{
+  const phones = await prisma.telephone.findMany({})
+  res.send({phones})
 })
 
 router.get('/mydata', function (req, res) {
