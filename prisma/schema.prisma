@@ -33,6 +33,7 @@ model telephone {
   model    String @unique
   price Int
   in_stock   Boolean  @default(true)
+  photo_link String
   processor String?
   screen_diagonal Float? 
   battery_capacity Int?
