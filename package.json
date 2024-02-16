@@ -4,9 +4,11 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run prisma && vite",
     "host": "vite --host",
-    "build": "vite build"
+    "build": "npm run prisma && vite build",
+    "prisma": "npx prisma generate && npx prisma db push",
+    "studio": "npx prisma studio"
   },
   "author": "",
   "license": "ISC",
