@@ -1,25 +1,36 @@
  
 #### 1. Инициализация призмы 
-#### npm i  
+```
+npm i
+``` 
 ---
 
 #### 2. Генерирует клиента Prisma на основе схемы 
-#### npx prisma generate 
+```
+npx prisma generate
+```
 --- 
 
 #### 3. Синхронизирует состояние схемы Prisma с БД #### 
-#### npx prisma db push 
+```
+npx prisma db push
+``` 
 --- 
 
 #### 4. Просмотр и управление данными через браузер
-#### npx prisma studio
+```
+npx prisma studio
+```
 --- 
 
 
 #### P.S. При необходимости:  
 
 #### -	Проверить (создать) файл  .env если надо – поменять пароль и порт.
-#### DATABASE_URL="postgresql://postgres:(*Пароль*)@localhost:(*порт*)/(*название таблицы*)?schema=public"
+```
+DATABASE_URL="postgresql://postgres:(*Пароль*)@localhost:(*порт*)/(*название таблицы*)?schema=public"
+```
+
 #### - создать базу данных в  PgAdmin (*название таблицы*), иначе будут ошибки.
 
 --- 

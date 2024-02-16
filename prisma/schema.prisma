@@ -7,40 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//!!!!!!!!  https://www.ozon.ru/category/smartfony-15502/
-
-
-
 model User {
   id         String   @id @default(uuid()) @db.Uuid
   email      String   @unique
-  hash       String   @map("password_hash")
-  role       Role     @default(USER)
   first_name String?  @db.VarChar(20)
   last_name  String?  @db.VarChar(20)
+  hash       String   @map("password_hash")
   age        Int?
   gender     String?
   city       String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  // orders     orders[]
+  role       Role     @default(USER)
+
   @@map("users")
 }
 
 model telephone {
-  id      Int     @id @default(autoincrement())
-  brand_name String
-  model    String @unique
-  price Int
-  in_stock   Boolean  @default(true)
-  photo_link String
-  processor String?
-  screen_diagonal Float? 
-  battery_capacity Int?
-  color    String?
-  extra_options Int?
+  id                  Int     @id @default(autoincrement())
+  brand_name          String
+  model               String  @unique
+  price               Int
+  processor           String?
+  screen_diagonal     Float?
+  battery_capacity    Int?
+  extra_options       Int?
+  color               String?
   wireless_interfaces String?
-  // users User[]  
+  in_stock            Boolean @default(true)
 }
 
 enum Role {
