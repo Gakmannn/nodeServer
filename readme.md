@@ -35,6 +35,4 @@ DATABASE_URL="postgresql://postgres:(*Пароль*)@localhost:(*порт*)/(*н
 
 --- 
 
-Котэ =^-^= (https://img.razrisyika.ru/kart/24/1200/94318-kot-saymon-4.jpg)  
-
-<div style="color: red;">weq</div> 
+Котэ =^-^= (https://img.razrisyika.ru/kart/24/1200/94318-kot-saymon-4.jpg)
