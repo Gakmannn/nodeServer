@@ -9,6 +9,34 @@ const router = Router()
 
 //! Ссылка на сайт https://www.ozon.ru/category/smartfony-15502/
 
+
+
+
+
+router.get("/telephones", async function(req,res){
+  // const data = req.body
+
+try {
+  const data = await prisma.telephone.findMany({
+    select:{
+      brand_name: true,
+      model : true,
+    }
+})
+  res.send(data)
+} catch (error) {
+  console.log(error);
+  res.send (error)
+  
+}
+})
+
+
+
+
+
+
+
 // const telephoneDB2 = [
 //   {
 //     id: 1,

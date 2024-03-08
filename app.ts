@@ -98,6 +98,9 @@ const resizeImages = async (req:Request, res:Response, next:NextFunction) => {
   next()
 }
 
+
+
+
 // используем перекодировку изображений
 app.use(resizeImages)
 
