@@ -9,7 +9,7 @@ const router = Router()
 
 //! Ссылка на сайт https://www.ozon.ru/category/smartfony-15502/
 
-
+//! DATABASE_URL="postgresql://postgres:belkud123@localhost:5432/telephone?schema=public"
 
 
 

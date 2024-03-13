@@ -1,3 +1,7 @@
+
+
+//! DATABASE_URL="postgresql://postgres:belkud123@localhost:5432/telephone?schema=public"
+
 generator client {
   provider = "prisma-client-js"
 }
