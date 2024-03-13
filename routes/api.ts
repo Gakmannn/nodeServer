@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const router = Router()
 
+
 //! Описываем функцию, которая будет обрабатывать GET запросы на адрес '/'
 
 //! Здесь прописываю логику файла schema.prisma
